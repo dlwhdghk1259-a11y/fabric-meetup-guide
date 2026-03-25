@@ -71,7 +71,7 @@ function App() {
         {view === 'guide' && <Guide onBack={() => navigateTo('menu')} />}
       </main>
       
-      {view !== 'landing' && <Footer />}
+      {view !== 'landing' && <Footer onNavigate={navigateTo} />}
     </div>
   );
 }
