@@ -28,8 +28,8 @@ const Particles = ({ mousePos, view }) => {
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
             size: Math.random() * 2 + 1,
-            speedX: Math.random() * 0.5 - 0.25,
-            speedY: Math.random() * 0.5 - 0.25,
+            speedX: Math.random() * 0.1 - 0.05,
+            speedY: Math.random() * 0.1 - 0.05,
             opacity: Math.random() * 0.5 + 0.1,
             // Assign a color theme (Fabric colors)
             colorIndex: Math.floor(Math.random() * 3) // 0: Blue, 1: Purple, 2: Orange/Teal
@@ -63,9 +63,9 @@ const Particles = ({ mousePos, view }) => {
         if (distance < interactionRadius) {
           const force = (interactionRadius - distance) / interactionRadius;
           if (isLanding) {
-            // Magnetic pull only on landing
-            p.x += dx * force * 0.05;
-            p.y += dy * force * 0.05;
+            // Magnetic pull reduced significantly for eye comfort
+            p.x += dx * force * 0.003;
+            p.y += dy * force * 0.003;
           }
           
           // Draw connecting line to mouse
