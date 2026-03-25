@@ -6,7 +6,6 @@ import Features from './components/Features';
 import Guide from './components/Guide';
 import Footer from './components/Footer';
 import Menu from './components/Menu';
-import Particles from './components/Particles';
 
 function App() {
   const [view, setView] = useState('landing');
@@ -48,9 +47,6 @@ function App() {
       >
         <div className="mesh-background" />
       </div>
-
-      {/* 시작하기 누른 후(랜딩 페이지가 아니면) 이펙트 완전 제거 */}
-      {view === 'landing' && <Particles mousePos={mousePos} />}
       
       <div 
         className="mouse-glow" 
