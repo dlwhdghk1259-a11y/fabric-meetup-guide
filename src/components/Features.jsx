@@ -1,30 +1,79 @@
 import React from 'react';
 
-const FeatureCard = ({ title, desc, icon, color }) => (
-  <div className="glass-card" style={{ padding: '32px' }}>
-    <div style={{ color, fontSize: '2rem', marginBottom: '20px' }}>{icon}</div>
-    <h3 style={{ marginBottom: '12px', fontSize: '1.25rem' }}>{title}</h3>
-    <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>{desc}</p>
-  </div>
+const FeatureCard = ({ title, desc, icon, color, url }) => (
+  <a 
+    href={url} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="glass-card" 
+    style={{ 
+      padding: '40px', 
+      textDecoration: 'none', 
+      textAlign: 'center', 
+      display: 'block', 
+      height: '100%', 
+      transition: 'all 0.3s ease',
+      position: 'relative',
+      overflow: 'hidden'
+    }}
+  >
+    <div style={{ position: 'absolute', top: '16px', right: '16px', fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)' }}>LEARN MORE ↗</div>
+    <div style={{ color, fontSize: '3rem', marginBottom: '24px' }}>{icon}</div>
+    <h3 style={{ marginBottom: '16px', fontSize: '1.25rem', color: '#fff' }}>{title}</h3>
+    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6' }}>{desc}</p>
+  </a>
 );
 
-const Features = () => {
+const Features = ({ onBack }) => {
   const features = [
-    { title: "데이터 팩토리(Data Factory)", desc: "데이터를 여러 곳에서 한꺼번에 가져오는 '트럭' 역할을 해요.", icon: "🚚", color: "#0078d4" },
-    { title: "데이터 웨어하우스(Warehouse)", desc: "가져온 데이터를 체계적으로 정리하여 보관하는 '창고'입니다.", icon: "🏙️", color: "#008272" },
-    { title: "데이터 사이언스(Data Science)", desc: "인공지능(AI)을 활용해서 데이터를 분석하고 미래를 예측해요.", icon: "🧠", color: "#a011ff" },
-    { title: "파워 BI(Power BI)", desc: "복잡한 데이터를 화려한 차트와 그래프로 예쁘게 그려냅니다.", icon: "📊", color: "#d83b01" }
+    { 
+      title: "데이터 팩토리(Data Factory)", 
+      desc: "데이터를 여러 곳에서 한꺼번에 가져오는 데이터 수집 도구입니다.", 
+      icon: "🚚", 
+      color: "#0078d4",
+      url: "https://learn.microsoft.com/azure/data-factory/?wt.mc_id=studentamb_491736"
+    },
+    { 
+      title: "데이터 웨어하우스(Warehouse)", 
+      desc: "가져온 데이터를 체계적으로 정리하여 보관하는 대규모 데이터 창고입니다.", 
+      icon: "🏙️", 
+      color: "#008272",
+      url: "https://learn.microsoft.com/fabric/data-warehouse/data-warehousing?wt.mc_id=studentamb_491736"
+    },
+    { 
+      title: "데이터 사이언스(Data Science)", 
+      desc: "인공지능(AI)을 활용해서 데이터를 분석하고 미래를 예측하는 도구입니다.", 
+      icon: "🧠", 
+      color: "#a011ff",
+      url: "https://learn.microsoft.com/fabric/data-science/tutorial-data-science-prepare-system?wt.mc_id=studentamb_491736"
+    },
+    { 
+      title: "파워 BI(Power BI)", 
+      desc: "복잡한 데이터를 화려한 차트와 그래프로 예쁘게 그려내는 시각화 도구입니다.", 
+      icon: "📊", 
+      color: "#d83b01",
+      url: "https://learn.microsoft.com/ko-kr/fabric/data-warehouse/data-warehousing?wt.mc_id=studentamb_491736"
+    }
   ];
 
   return (
-    <section id="features" className="section">
-      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+    <section className="section animate-up" style={{ minHeight: '90vh' }}>
+      <div style={{ textAlign: 'center', marginBottom: '48px' }}>
         <div className="feature-tag">FEATURES</div>
-        <h2>다양한 도구들을 하나로</h2>
-        <p style={{ color: 'var(--text-muted)' }}>네 가지 핵심 기능으로 데이터의 전체 흐름을 잡을 수 있습니다.</p>
+        <h2>핵심 기능 마스터하기</h2>
+        <p style={{ color: 'var(--text-muted)' }}>각 항목을 클릭하면 공식 Microsoft Learn 페이지로 연결됩니다.</p>
       </div>
-      <div className="grid-container scroll-animate">
-        {features.map((f, i) => <FeatureCard key={i} {...f} />)}
+
+      <div className="grid-container" style={{ gap: '24px', maxWidth: '1100px', margin: '0 auto' }}>
+        {features.map((f, i) => (
+          <div key={i} className="animate-up" style={{ animationDelay: `${i * 0.1}s` }}>
+            <FeatureCard {...f} />
+          </div>
+        ))}
+      </div>
+
+      <div style={{ textAlign: 'center', marginTop: '64px' }}>
+        <button className="cta-button" onClick={onBack}>메뉴로 돌아가기</button>
       </div>
     </section>
   );
