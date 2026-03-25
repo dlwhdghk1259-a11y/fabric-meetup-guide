@@ -7,6 +7,8 @@ import Guide from './components/Guide';
 import Footer from './components/Footer';
 import Menu from './components/Menu';
 
+import cityImg from './assets/city.png';
+
 function App() {
   const [view, setView] = useState('landing');
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -30,26 +32,49 @@ function App() {
     }, 300); // 0.3초 대기
   };
 
-  // Smooth 3D tilt
-  const rotY = (mousePos.x / window.innerWidth - 0.5) * 15; // -7.5 to 7.5 deg
-  const rotX = (mousePos.y / window.innerHeight - 0.5) * -15; // 7.5 to -7.5 deg
+  // Smooth 3D tilt for sub-pages
+  const rotY = (mousePos.x / window.innerWidth - 0.5) * 15;
+  const rotX = (mousePos.y / window.innerHeight - 0.5) * -15;
+
+  // Aggressive 3D tracking for Virtual City landing page
+  const isLanding = view === 'landing';
+  const cityRotY = (mousePos.x / window.innerWidth - 0.5) * 45; // -22.5 to 22.5
+  const cityRotX = (mousePos.y / window.innerHeight - 0.5) * -45;
 
   return (
     <div className="app-container unselectable">
-      {/* Dynamic CSS Mesh Background */}
-      <div 
-        className="space-scene" 
-        style={{ 
-          transform: `rotateY(${rotY}deg) rotateX(${rotX}deg) scale(1.05)`,
-          transformStyle: 'preserve-3d',
-          transition: 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)'
-        }}
-      >
-        <div className="mesh-background" />
-      </div>
+      {isLanding ? (
+        <div 
+          className="city-scene" 
+          style={{ 
+            position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -2,
+            perspective: '1500px', overflow: 'hidden', background: '#020408'
+          }}
+        >
+          {/* A massive backdrop wrapping around the camera */}
+          <div 
+            style={{
+              position: 'absolute', top: '-40%', left: '-40%', width: '180%', height: '180%',
+              backgroundImage: `url(${cityImg})`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'brightness(0.7) contrast(1.2)',
+              transform: `translateZ(-300px) rotateX(${cityRotX}deg) rotateY(${cityRotY}deg)`,
+              transformStyle: 'preserve-3d', transition: 'transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)'
+            }} 
+          />
+        </div>
+      ) : (
+        <div 
+          className="space-scene" 
+          style={{ 
+            transform: `rotateY(${rotY}deg) rotateX(${rotX}deg) scale(1.05)`,
+            transformStyle: 'preserve-3d', transition: 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)'
+          }}
+        >
+          <div className="mesh-background" />
+        </div>
+      )}
       
       <div 
-        className="mouse-glow" 
+        className="mouse-glow"  
         style={{ 
           left: `${mousePos.x}px`, 
           top: `${mousePos.y}px`,

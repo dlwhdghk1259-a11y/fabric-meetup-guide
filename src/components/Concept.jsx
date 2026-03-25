@@ -9,8 +9,8 @@ const Concept = ({ onBack }) => {
         <p style={{ color: 'var(--text-muted)' }}>스마트폰에 비유하면 훨씬 이해하기 쉬워요! 📱</p>
       </div>
       
-      <div className="glass-card" style={{ maxWidth: '900px', margin: '0 auto', padding: '48px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '48px', alignItems: 'center' }}>
+      <div className="glass-card" style={{ maxWidth: '900px', margin: '0 auto', padding: 'clamp(24px, 5vw, 48px)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px', alignItems: 'center' }}>
           <div>
             <h3 style={{ fontSize: '1.75rem', marginBottom: '20px' }}>패브릭은 <span style={{ color: '#0078D4' }}>'최신형 스마트폰'</span>과 같습니다!</h3>
             <p style={{ marginBottom: '24px', lineHeight: '1.8' }}>
