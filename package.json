@@ -2,7 +2,7 @@
   "name": "fabric-meetup-guide",
   "private": true,
   "version": "0.0.0",
-  "homepage": ".",
+  "homepage": "https://dlwhdghk1259-a11y.github.io/fabric-meetup-guide/",
   "type": "module",
   "scripts": {
     "dev": "vite",
