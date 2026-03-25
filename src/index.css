@@ -74,6 +74,19 @@ h1, h2, h3 {
   cursor: default;
 }
 
+.panorama-backdrop {
+  position: absolute;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.1s ease-out;
+  z-index: -3;
+}
+
 .unselectable {
   user-select: none;
   -webkit-user-select: none;

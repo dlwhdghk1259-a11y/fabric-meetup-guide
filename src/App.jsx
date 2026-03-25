@@ -8,10 +8,8 @@ import Footer from './components/Footer';
 import Menu from './components/Menu';
 import Particles from './components/Particles';
 
-// Planets Assets
-import planet1 from './assets/planet1.png';
-import planet2 from './assets/planet2.png';
-import planet3 from './assets/planet3.png';
+// Stunning Panorama Space Asset
+import panorama from './assets/panorama.png';
 
 function App() {
   const [view, setView] = useState('landing');
@@ -30,58 +28,28 @@ function App() {
     setView(newView);
   };
 
-  // Rotation logic for 360-degree feel
-  const rotY = (mousePos.x / window.innerWidth - 0.5) * 20; // -10 to 10 deg
-  const rotX = (mousePos.y / window.innerHeight - 0.5) * -20; // 10 to -10 deg
+  // Smooth out rotation and extend angle for a "surround" look
+  const rotY = (mousePos.x / window.innerWidth - 0.5) * 30; // -15 to 15 deg
+  const rotX = (mousePos.y / window.innerHeight - 0.5) * -30; // 15 to -15 deg
 
   return (
     <div className="app-container unselectable">
-      {/* 360-Degree Space Scene */}
-      <div className="space-scene" style={{ transform: `rotateY(${rotY}deg) rotateX(${rotX}deg)` }}>
+      {/* 360-Degree Immersive Space Panorama */}
+      <div 
+        className="space-scene" 
+        style={{ 
+          transform: `rotateY(${rotY}deg) rotateX(${rotX}deg) translateZ(-100px) scale(1.1)`,
+          transformStyle: 'preserve-3d' 
+        }}
+      >
         <div 
-          className="mesh-background" 
+          className="panorama-backdrop" 
           style={{ 
-            transform: `translate(${mousePos.x * -0.05}px, ${mousePos.y * -0.05}px)` 
+            backgroundImage: `url(${panorama})`,
+            transform: `translate(${mousePos.x * -0.02}px, ${mousePos.y * -0.02}px)`
           }} 
         />
-        
-        {/* Planets with different parallax depth */}
-        <img 
-          src={planet1} 
-          className="planet unselectable" 
-          alt="planet1"
-          style={{ 
-            width: '300px', 
-            top: '15%', 
-            left: '10%', 
-            transform: `translate(${mousePos.x * 0.08}px, ${mousePos.y * 0.08}px)`,
-            opacity: 0.8
-          }} 
-        />
-        <img 
-          src={planet2} 
-          className="planet unselectable" 
-          alt="planet2"
-          style={{ 
-            width: '450px', 
-            top: '50%', 
-            right: '5%', 
-            transform: `translate(${mousePos.x * -0.06}px, ${mousePos.y * -0.06}px)`,
-            opacity: 0.6
-          }} 
-        />
-        <img 
-          src={planet3} 
-          className="planet unselectable" 
-          alt="planet3"
-          style={{ 
-            width: '200px', 
-            bottom: '10%', 
-            left: '30%', 
-            transform: `translate(${mousePos.x * 0.1}px, ${mousePos.y * 0.1}px)`,
-            opacity: 0.7
-          }} 
-        />
+        <div className="mesh-background" />
       </div>
 
       {view === 'landing' && <Particles mousePos={mousePos} />}
