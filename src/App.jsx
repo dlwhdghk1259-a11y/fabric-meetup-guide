@@ -6,6 +6,7 @@ import Features from './components/Features';
 import Guide from './components/Guide';
 import Footer from './components/Footer';
 import Menu from './components/Menu';
+import Particles from './components/Particles';
 
 function App() {
   const [view, setView] = useState('landing');
@@ -43,6 +44,7 @@ function App() {
   return (
     <div className="app-container">
       <div className="mesh-background" />
+      {view === 'landing' && <Particles mousePos={mousePos} />}
       <div 
         className="mouse-glow" 
         style={{ 

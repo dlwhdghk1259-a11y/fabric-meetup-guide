@@ -24,6 +24,12 @@ const steps = [
     title: "대시보드로 시각화하기",
     desc: "Power BI를 눌러 방금 저장한 데이터를 불러오면, 인공지능이 자동으로 멋진 도표와 보고서를 그려줍니다!",
     tip: "Tip: '자동 보고서 생성' 기능을 써보세요. 단 몇 초 만에 완성됩니다!"
+  },
+  {
+    num: "05",
+    title: "깊이 알기: Flow vs Pipeline",
+    desc: "패브릭에는 데이터를 옮기는 두 가지 핵심 방법이 있어요. '데이터플로우(Flow)'와 '파이프라인(Pipeline)'의 차이를 이해하는 것이 중요합니다.",
+    extra: true
   }
 ];
 
@@ -50,10 +56,10 @@ const Guide = ({ onBack }) => {
         <p style={{ color: 'var(--text-muted)' }}>한 단계씩 차근차근 따라와 보세요.</p>
       </div>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '850px', margin: '0 auto' }}>
         {/* Step Indicator */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '40px', position: 'relative' }}>
-          <div style={{ height: '2px', background: 'rgba(255,255,255,0.1)', position: 'absolute', top: '24px', left: 0, right: 0, zIndex: 0 }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '40px', position: 'relative', padding: '0 20px' }}>
+          <div style={{ height: '2px', background: 'rgba(255,255,255,0.1)', position: 'absolute', top: '24px', left: '40px', right: '40px', zIndex: 0 }} />
           {steps.map((_, i) => (
             <div 
               key={i} 
@@ -71,7 +77,9 @@ const Guide = ({ onBack }) => {
                 fontWeight: 'bold',
                 fontSize: '0.9rem',
                 zIndex: 1,
-                transition: 'all 0.3s ease'
+                transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                transform: i === currentStep ? 'scale(1.2)' : 'scale(1)',
+                boxShadow: i === currentStep ? '0 0 20px var(--primary-glow)' : 'none'
               }}
             >
               {i + 1}
@@ -80,9 +88,9 @@ const Guide = ({ onBack }) => {
         </div>
 
         {/* Step Card */}
-        <div className="glass-card" style={{ padding: '48px', marginBottom: '48px', minHeight: '400px', display: 'flex', flexDirection: 'column' }}>
+        <div className="glass-card animate-up" key={currentStep} style={{ padding: '48px', marginBottom: '48px', minHeight: '500px', display: 'flex', flexDirection: 'column' }}>
           <div style={{ flex: 1 }}>
-            <div style={{ display: 'flex', gap: '32px', marginBottom: '40px', alignItems: 'flex-start' }}>
+            <div style={{ display: 'flex', gap: '32px', marginBottom: '32px', alignItems: 'center' }}>
               <div style={{
                 padding: '12px 24px',
                 borderRadius: '50px',
@@ -92,37 +100,61 @@ const Guide = ({ onBack }) => {
                 fontSize: '1.2rem',
                 flexShrink: 0
               }}>{steps[currentStep].num}</div>
-              <div>
-                <h3 style={{ marginBottom: '16px', fontSize: '1.75rem' }}>{steps[currentStep].title}</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', lineHeight: '1.8' }}>{steps[currentStep].desc}</p>
+              <h3 style={{ fontSize: '1.75rem' }}>{steps[currentStep].title}</h3>
+            </div>
+
+            {steps[currentStep].extra ? (
+              /* Special Comparison UI for Step 5 */
+              <div style={{ marginTop: '24px' }}>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '32px', fontSize: '1.1rem' }}>{steps[currentStep].desc}</p>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                  <div style={{ background: 'rgba(0, 120, 212, 0.1)', borderRadius: '16px', padding: '24px', border: '1px solid rgba(0, 120, 212, 0.2)' }}>
+                    <h4 style={{ color: '#0078D4', marginBottom: '12px' }}>📊 Dataflow (Flow)</h4>
+                    <p style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
+                      <b>비유:</b> 식재료를 직접 하나씩 씻고 다듬는 과정 <br /><br />
+                      코딩 없이 마우스 클릭만으로 데이터를 변환하고 깨끗하게 만드는 데 집중합니다. 초보자에게 아주 친숙해요.
+                    </p>
+                  </div>
+                  <div style={{ background: 'rgba(160, 17, 255, 0.1)', borderRadius: '16px', padding: '24px', border: '1px solid rgba(160, 17, 255, 0.2)' }}>
+                    <h4 style={{ color: '#A011FF', marginBottom: '12px' }}>⚙️ Data Pipeline</h4>
+                    <p style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
+                      <b>비유:</b> 주방 전체의 요리 순서를 지휘하는 매니저 <br /><br />
+                      거대한 데이터를 한꺼번에 옮기거나, 특정 시간에 자동으로 작업을 반복시키는 '스케줄 관리'와 '오케스트레이션'에 강합니다.
+                    </p>
+                  </div>
+                </div>
+                <div style={{ marginTop: '32px', textAlign: 'center', background: 'rgba(255,255,255,0.03)', padding: '20px', borderRadius: '12px' }}>
+                  ✨ <b>결론:</b> 화면에서 간단히 고칠 때는 <b>Flow</b>, 공장처럼 대량으로 관리할 때는 <b>Pipeline</b>!
+                </div>
               </div>
-            </div>
-
-            {/* Image Placeholder */}
-            <div style={{ 
-              background: 'rgba(255, 255, 255, 0.05)', 
-              border: '2px dashed rgba(255, 255, 255, 0.1)', 
-              borderRadius: '24px', 
-              height: '240px', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center',
-              color: 'rgba(255,255,255,0.2)',
-              margin: '32px 0'
-            }}>
-              [실제 Fabric 화면 캡쳐 이미지가 들어갈 위치입니다]
-            </div>
-
-            <div style={{ 
-              padding: '16px 24px', 
-              background: 'rgba(0, 120, 212, 0.08)', 
-              borderRadius: '12px', 
-              borderLeft: '4px solid #0078D4',
-              color: '#fff',
-              fontSize: '0.9rem'
-            }}>
-              {steps[currentStep].tip}
-            </div>
+            ) : (
+              <>
+                <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', lineHeight: '1.8' }}>{steps[currentStep].desc}</p>
+                <div style={{ 
+                  background: 'rgba(255, 255, 255, 0.05)', 
+                  border: '2px dashed rgba(255, 255, 255, 0.1)', 
+                  borderRadius: '24px', 
+                  minHeight: '200px', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  color: 'rgba(255,255,255,0.2)',
+                  margin: '32px 0'
+                }}>
+                  [Fabric 캡쳐 이미지 대기 중]
+                </div>
+                <div style={{ 
+                  padding: '16px 24px', 
+                  background: 'rgba(0, 120, 212, 0.08)', 
+                  borderRadius: '12px', 
+                  borderLeft: '4px solid #0078D4',
+                  color: '#fff',
+                  fontSize: '0.9rem'
+                }}>
+                  {steps[currentStep].tip}
+                </div>
+              </>
+            )}
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '48px' }}>
