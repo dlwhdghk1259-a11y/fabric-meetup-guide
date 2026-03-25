@@ -8,7 +8,16 @@ import Footer from './components/Footer';
 import Menu from './components/Menu';
 
 function App() {
-  const [view, setView] = useState('landing'); // 'landing', 'menu', 'concept', 'features', 'guide'
+  const [view, setView] = useState('landing');
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   useEffect(() => {
     // Basic Intersection Observer for scroll animations (if needed in sections)
@@ -34,9 +43,16 @@ function App() {
   return (
     <div className="app-container">
       <div className="mesh-background" />
+      <div 
+        className="mouse-glow" 
+        style={{ 
+          left: `${mousePos.x}px`, 
+          top: `${mousePos.y}px` 
+        }} 
+      />
       
       {/* Navbar only shows when not on landing */}
-      {view !== 'landing' && <Navbar onHome={() => navigateTo('menu')} onNavigate={navigateTo} />}
+      {view !== 'landing' && <Navbar onHome={() => navigateTo('landing')} onNavigate={navigateTo} />}
       
       <main>
         {view === 'landing' && <Hero onStart={() => navigateTo('menu')} />}

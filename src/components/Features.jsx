@@ -1,28 +1,55 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
-const FeatureCard = ({ title, desc, icon, color, url }) => (
-  <a 
-    href={url} 
-    target="_blank" 
-    rel="noopener noreferrer" 
-    className="glass-card" 
-    style={{ 
-      padding: '40px', 
-      textDecoration: 'none', 
-      textAlign: 'center', 
-      display: 'block', 
-      height: '100%', 
-      transition: 'all 0.3s ease',
-      position: 'relative',
-      overflow: 'hidden'
-    }}
-  >
-    <div style={{ position: 'absolute', top: '16px', right: '16px', fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)' }}>LEARN MORE ↗</div>
-    <div style={{ color, fontSize: '3rem', marginBottom: '24px' }}>{icon}</div>
-    <h3 style={{ marginBottom: '16px', fontSize: '1.25rem', color: '#fff' }}>{title}</h3>
-    <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6' }}>{desc}</p>
-  </a>
-);
+const FeatureCard = ({ title, desc, icon, color, url }) => {
+  const cardRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const card = cardRef.current;
+    const rect = card.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const x = e.clientX - centerX;
+    const y = e.clientY - centerY;
+    
+    const rotateX = -y / 15;
+    const rotateY = x / 15;
+    
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+  };
+
+  const handleMouseLeave = () => {
+    if (!cardRef.current) return;
+    cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+  };
+
+  return (
+    <a 
+      ref={cardRef}
+      href={url} 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      className="glass-card tilt-card" 
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ 
+        padding: '40px', 
+        textDecoration: 'none', 
+        textAlign: 'center', 
+        display: 'block', 
+        height: '100%', 
+        transition: 'all 0.1s ease-out, box-shadow 0.3s ease',
+        position: 'relative',
+        overflow: 'hidden'
+      }}
+    >
+      <div style={{ position: 'absolute', top: '16px', right: '16px', fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', fontWeight: 'bold' }}>LEARN MORE ↗</div>
+      <div style={{ color, fontSize: '3.5rem', marginBottom: '24px' }}>{icon}</div>
+      <h3 style={{ marginBottom: '16px', fontSize: '1.25rem', color: '#fff' }}>{title}</h3>
+      <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6' }}>{desc}</p>
+    </a>
+  );
+};
 
 const Features = ({ onBack }) => {
   const features = [
@@ -59,8 +86,8 @@ const Features = ({ onBack }) => {
   return (
     <section className="section animate-up" style={{ minHeight: '90vh' }}>
       <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-        <div className="feature-tag">FEATURES</div>
-        <h2>핵심 기능 마스터하기</h2>
+        <div className="feature-tag shimmer-text">FEATURES</div>
+        <h2 className="gradient-text">핵심 기능 마스터하기</h2>
         <p style={{ color: 'var(--text-muted)' }}>각 항목을 클릭하면 공식 Microsoft Learn 페이지로 연결됩니다.</p>
       </div>
 
