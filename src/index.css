@@ -39,20 +39,39 @@ h1, h2, h3 {
   position: relative;
 }
 
-/* Space Mesh Background with Interactivity */
-.mesh-background {
+/* Space Scene 360-degree rotation container */
+.space-scene {
   position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: -2;
+  perspective: 2000px;
+  overflow: hidden;
+  background: #020408;
+}
+
+.mesh-background {
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
   background: 
-    radial-gradient(circle at 50% 50%, rgba(0, 120, 212, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(160, 17, 255, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 20% 80%, rgba(0, 130, 114, 0.05) 0%, transparent 40%),
-    #020408;
-  transition: transform 0.2s ease-out;
+    radial-gradient(circle at 50% 50%, rgba(0, 120, 212, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(160, 17, 255, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 20% 80%, rgba(0, 130, 114, 0.08) 0%, transparent 40%);
+  filter: blur(100px);
+  transition: transform 0.3s ease-out;
+}
+
+.planet {
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8), inset -20px -20px 50px rgba(0, 0, 0, 0.9);
+  transition: transform 0.4s ease-out;
+  cursor: default;
 }
 
 .unselectable {
