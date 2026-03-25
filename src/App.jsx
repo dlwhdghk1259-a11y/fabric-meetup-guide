@@ -10,6 +10,7 @@ import Particles from './components/Particles';
 
 function App() {
   const [view, setView] = useState('landing');
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [mousePos, setMousePos] = useState({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
 
   useEffect(() => {
@@ -21,8 +22,13 @@ function App() {
   }, []);
 
   const navigateTo = (newView) => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setView(newView);
+    if (view === newView) return;
+    setIsTransitioning(true); // Fade out 시작
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      setView(newView);
+      setIsTransitioning(false); // Fade in 시작
+    }, 300); // 0.3초 대기
   };
 
   // Smooth 3D tilt
@@ -36,14 +42,15 @@ function App() {
         className="space-scene" 
         style={{ 
           transform: `rotateY(${rotY}deg) rotateX(${rotX}deg) scale(1.05)`,
-          transformStyle: 'preserve-3d' 
+          transformStyle: 'preserve-3d',
+          transition: 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)'
         }}
       >
         <div className="mesh-background" />
       </div>
 
-      {/* Enhanced Particle System (Active globally now for maximum WOW) */}
-      <Particles mousePos={mousePos} view={view} />
+      {/* 시작하기 누른 후(랜딩 페이지가 아니면) 이펙트 완전 제거 */}
+      {view === 'landing' && <Particles mousePos={mousePos} />}
       
       <div 
         className="mouse-glow" 
@@ -56,7 +63,11 @@ function App() {
       
       {view !== 'landing' && <Navbar onHome={() => navigateTo('landing')} onNavigate={navigateTo} />}
       
-      <main>
+      <main style={{ 
+        opacity: isTransitioning ? 0 : 1, 
+        transform: isTransitioning ? 'translateY(10px)' : 'translateY(0)',
+        transition: 'all 0.3s ease-in-out' 
+      }}>
         {view === 'landing' && <Hero onStart={() => navigateTo('menu')} />}
         {view === 'menu' && <Menu onNavigate={navigateTo} />}
         {view === 'concept' && <Concept onBack={() => navigateTo('menu')} />}
