@@ -8,9 +8,6 @@ import Footer from './components/Footer';
 import Menu from './components/Menu';
 import Particles from './components/Particles';
 
-// Stunning Panorama Space Asset
-import panorama from './assets/panorama.png';
-
 function App() {
   const [view, setView] = useState('landing');
   const [mousePos, setMousePos] = useState({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
@@ -28,31 +25,25 @@ function App() {
     setView(newView);
   };
 
-  // Smooth out rotation and extend angle for a "surround" look
-  const rotY = (mousePos.x / window.innerWidth - 0.5) * 30; // -15 to 15 deg
-  const rotX = (mousePos.y / window.innerHeight - 0.5) * -30; // 15 to -15 deg
+  // Smooth 3D tilt
+  const rotY = (mousePos.x / window.innerWidth - 0.5) * 15; // -7.5 to 7.5 deg
+  const rotX = (mousePos.y / window.innerHeight - 0.5) * -15; // 7.5 to -7.5 deg
 
   return (
     <div className="app-container unselectable">
-      {/* 360-Degree Immersive Space Panorama */}
+      {/* Dynamic CSS Mesh Background */}
       <div 
         className="space-scene" 
         style={{ 
-          transform: `rotateY(${rotY}deg) rotateX(${rotX}deg) translateZ(-100px) scale(1.1)`,
+          transform: `rotateY(${rotY}deg) rotateX(${rotX}deg) scale(1.05)`,
           transformStyle: 'preserve-3d' 
         }}
       >
-        <div 
-          className="panorama-backdrop" 
-          style={{ 
-            backgroundImage: `url(${panorama})`,
-            transform: `translate(${mousePos.x * -0.02}px, ${mousePos.y * -0.02}px)`
-          }} 
-        />
         <div className="mesh-background" />
       </div>
 
-      {view === 'landing' && <Particles mousePos={mousePos} />}
+      {/* Enhanced Particle System (Active globally now for maximum WOW) */}
+      <Particles mousePos={mousePos} view={view} />
       
       <div 
         className="mouse-glow" 
