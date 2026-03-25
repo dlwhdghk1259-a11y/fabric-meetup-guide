@@ -19,10 +19,10 @@ const Hero = ({ onStart }) => {
   };
 
   return (
-    <section className="hero animate-up" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', perspective: '1000px' }}>
-      <div className="subtitle animate-up">맞다AI가 비공식 밋업</div>
+    <section className="hero animate-up unselectable" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', perspective: '1000px' }}>
+      <div className="subtitle animate-up unselectable">맞다AI가 비공식 밋업</div>
       
-      <div className="floating" style={{ marginBottom: '32px' }}>
+      <div className="floating unselectable" style={{ marginBottom: '32px' }}>
         <svg width="140" height="140" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: 'drop-shadow(0 0 30px var(--primary-glow))' }}>
           <path d="M16 4L2 11.5L16 19L30 11.5L16 4Z" fill="#0078D4" />
           <path d="M2 20.5L16 28L30 20.5V14.5L16 22L2 14.5V20.5Z" fill="#0078D4" fillOpacity="0.8" />

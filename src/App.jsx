@@ -43,7 +43,12 @@ function App() {
 
   return (
     <div className="app-container">
-      <div className="mesh-background" />
+      <div 
+        className="mesh-background" 
+        style={{ 
+          transform: `translate(${mousePos.x * 0.01}px, ${mousePos.y * 0.01}px)` 
+        }} 
+      />
       {view === 'landing' && <Particles mousePos={mousePos} />}
       <div 
         className="mouse-glow" 
